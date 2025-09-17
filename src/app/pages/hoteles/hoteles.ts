@@ -2,34 +2,67 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HotelService } from '../../services/hotel';
 import { Hotel } from '../../interfaces/hotel.interface';
-import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-hoteles',
-  imports: [CommonModule, RouterLink],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './hoteles.html',
-  styleUrl: './hoteles.scss',
-  standalone: true
+  styleUrls: ['./hoteles.scss']
 })
-export class Hoteles implements OnInit{
+export class Hoteles implements OnInit {
   hoteles: Hotel[] = [];
-  loading = true;
+  hotelesFiltrados: Hotel[] = [];
+  ciudades: string[] = [];
+  ciudadSeleccionada = '';
+  calificacionSeleccionada = '';
+  cargando = false;
   error = '';
 
   constructor(private hotelService: HotelService) {}
 
   ngOnInit() {
+    this.cargando = true;
     this.hotelService.getHoteles().subscribe({
-      next: (data) => {
-        console.log("Datos recibidos de hoteles:", data);
-        this.hoteles = data;
-        this.loading = false;
+      next: hoteles => {
+        this.hoteles = hoteles;
+        this.ciudades = [
+          ...new Set(hoteles.map(h => h.departamento.trim()))
+        ];
+        this.hotelesFiltrados = [...hoteles];
+        this.cargando = false;
       },
-      error: (err) => {
-        this.error = 'Error al cargar los hoteles';
-        this.loading = false;
-        console.error("Error al cargar hoteles:", err);
+      error: err => {
+        this.error = 'No se pudo cargar la lista de hoteles';
+        this.cargando = false;
       }
     });
-  } 
+  }
+
+  aplicarFiltros() {
+    let filtrados = this.hoteles;
+
+    // Filtrar por ciudad/departamento
+    if (this.ciudadSeleccionada) {
+      const ciudad = this.ciudadSeleccionada.trim().toLowerCase();
+      filtrados = filtrados.filter(h =>
+        h.departamento.trim().toLowerCase() === ciudad
+      );
+    }
+
+    // Filtrar por calificación
+    if (this.calificacionSeleccionada) {
+      const calif = parseFloat(this.calificacionSeleccionada);
+      filtrados = filtrados.filter(h =>
+        Math.round(h.calificacion) === Math.round(calif)
+      );
+    }
+
+    this.hotelesFiltrados = filtrados;
+  }
+
+  onVerDetalles(id_hotel: number) {
+    window.location.href = `/hoteles/${id_hotel}`;
+  }
 }
