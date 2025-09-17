@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { SharedModule } from './shared/shared-module';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink],
+  imports: [SharedModule, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
