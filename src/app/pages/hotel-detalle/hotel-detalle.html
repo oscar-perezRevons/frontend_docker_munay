@@ -1,0 +1,13 @@
+<h1>Detalle del Hotel</h1>
+
+<div *ngIf="loading">Cargando datos del hotel...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && hotel">
+  <strong>Nombre:</strong> {{ hotel.nombre }}<br>
+  <strong>Ubicación:</strong> {{ hotel.ubicacion }}<br>
+  <strong>Departamento:</strong> {{ hotel.departamento }}<br>
+  <strong>Calificación:</strong> {{ hotel.calificacion }}<br>
+  <strong>Estado:</strong> {{ hotel.estado ? "Activo" : "Inactivo" }}<br>
+  <strong>Fecha de creación:</strong> {{ hotel.fecha_creacion }}<br>
+</div>

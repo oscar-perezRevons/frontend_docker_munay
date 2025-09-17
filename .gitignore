@@ -7,9 +7,12 @@
 /bazel-out
 
 # Node
-/node_modules
-npm-debug.log
-yarn-error.log
+/node_modules/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+package-lock.json
+yarn.lock
 
 # IDEs and editors
 .idea/
@@ -19,24 +22,55 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+*.sublime-project
 
 # Visual Studio Code
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
+.history/
+
+# Angular
+.angular/
+.angular/cache
 
 # Miscellaneous
-/.angular/cache
 .sass-cache/
-/connect.lock
-/coverage
+.connect.lock
+/coverage/
 /libpeerconnection.log
 testem.log
-/typings
+/typings/
+.cache/
+temp/
+tmp/
+*.tsbuildinfo
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Environment files
+.env
+.env.*
+src/environments/*.local.ts
+src/environments/*.prod.ts
+src/environments/*.dev.ts
+
+# Docker
+*.env
+.env.local
+.env.*.local
+
+# Build artifacts
+*.tgz
+
+# OS-specific
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# Others
+npm-error.log

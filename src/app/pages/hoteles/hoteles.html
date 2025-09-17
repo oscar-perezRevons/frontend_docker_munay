@@ -1,0 +1,21 @@
+<h1>Lista de Hoteles</h1>
+
+<div *ngIf="loading">Cargando hoteles...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<ul *ngIf="!loading && hoteles.length">
+  <li *ngFor="let hotel of hoteles">
+    <a [routerLink]="['/hoteles', hotel.id_hotel]">
+      <strong>{{ hotel.nombre }}</strong>
+    </a><br>
+    Ubicación: {{ hotel.ubicacion }}<br>
+    Departamento: {{ hotel.departamento }}<br>
+    Calificación: {{ hotel.calificacion }}<br>
+    Estado: {{ hotel.estado ? 'Activo' : 'Inactivo' }}<br>
+    Fecha de creación: {{ hotel.fecha_creacion }}<br>
+  </li>
+</ul>
+
+<div *ngIf="!loading && !hoteles.length && !error">
+  No hay hoteles disponibles.
+</div>
